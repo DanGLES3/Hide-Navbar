@@ -205,7 +205,7 @@ STOCK="$MODPATH"/Mods/HPS2/res/values/dimens.xml
 SONY="$MODPATH"/Mods/HPS3/res/values/dimens.xml
 OP="$MODPATH"/Mods/HPS2/res/values/dimens.xml
 
-#Folder creation and etc
+#Folder creation and etc (IMPROVE LATER TO USE LESS CODE)
 if [ "$API" -ge 29 ]; then
 sed -i s/0.3/"$BH"/g "$RES"
 sed -i s/0.2/"$BH"/g "$PIXEL"
@@ -307,12 +307,10 @@ rm -rf "$MODPATH"/unsigned6.apk
 
 if [ -d "/data/adb/ksud" ]; then
     ui_print ""
-    ui_print "     For KernelSU make sure to give SystemUI superuser access"
-    ui_print "     or make sure unmount modules is disabled to SystemUI in the superuser menu"
+    ui_print "     For KernelSU make sure to give disable unmount for SystemUI and the system launcher"
 fi
 
 
 ui_print "     Complete"
 
-chmod 755 /data/adb/modules/HideNavBar/
 
