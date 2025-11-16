@@ -226,10 +226,14 @@ mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xxhdpi/
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xxxhdpi/
 mkdir -p "$MODPATH"/Mods/P/
 mkdir -p "$MODPATH"/Mods/L/
+mkdir -p "$MODPATH"/Mods/O/
+mkdir -p "$MODPATH"/Mods/S/
 mkdir -p "$MODPATH"/Mods/HTK/
 mkdir "$MODPATH"/compiled
 mkdir "$MODPATH"/compiled2
 mkdir "$MODPATH"/compiled3
+mkdir "$MODPATH"/compiled4
+mkdir "$MODPATH"/compiled5
 mkdir "$MODPATH"/compiled6
 cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-sw900dp/
 cp -rf "$MODPATH"/Mods/HPS1/res/values/dimens.xml "$MODPATH"/Mods/HPS1/res/values-sw600dp-land/
@@ -259,6 +263,14 @@ if [ "$API" -ge 29 ]; then
     "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS2/res -o "$MODPATH"/compiled3 && \
     "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned3.apk -I /system/framework/framework-res.apk \
     --manifest "$MODPATH"/Mods/HPS2/AndroidManifest.xml "$MODPATH"/compiled3/*
+
+    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS3/res -o "$MODPATH"/compiled4 && \
+    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned4.apk -I /system/framework/framework-res.apk \
+    --manifest "$MODPATH"/Mods/HPS3/AndroidManifest.xml "$MODPATH"/compiled4/*
+
+    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS4/res -o "$MODPATH"/compiled5 && \
+    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned5.apk -I /system/framework/framework-res.apk \
+    --manifest "$MODPATH"/Mods/HPS4/AndroidManifest.xml "$MODPATH"/compiled5/*
 fi
 
 if [ "$HKB" = true ]; then
@@ -276,6 +288,8 @@ if [ "$API" -ge 30 ]; then
 "$MODPATH"/tools/zipsigner "$MODPATH"/unsigned.apk "$MODPATH"/Mods/Q/NavigationBarModeGestura/NavigationBarModeGesturalOverlay.apk
 "$MODPATH"/tools/zipsigner "$MODPATH"/unsigned2.apk "$MODPATH"/Mods/P/Pixel.apk
 "$MODPATH"/tools/zipsigner "$MODPATH"/unsigned3.apk "$MODPATH"/Mods/L/L3.apk
+"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned4.apk "$MODPATH"/Mods/S/Sony.apk
+"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned5.apk "$MODPATH"/Mods/O/O.apk
 elif [ "$API" -eq 29 ] ; then
 "$MODPATH"/tools/zipsignero "$MODPATH"/unsigned.apk "$MODPATH"/Mods/Q/NavigationBarModeGestura/NavigationBarModeGesturalOverlay.apk
 fi
@@ -283,7 +297,7 @@ fi
 #Install overlays
 if [ "$API" -ge 29 ]; then
 mkdir -p "$MODPATH"/system"$OP"
-cp -rf "$MODPATH"/Mods/Q/* "$MODPATH"/Mods/P/ "$MODPATH"/Mods/L/ "$MODPATH"/Mods/"$VAR3"/ "$MODPATH"/Mods/"$VAR4"/ "$MODPATH"/Mods/"$VAR5"/ "$MODPATH"/system/app/
+cp -rf "$MODPATH"/Mods/Q/* "$MODPATH"/Mods/P/ "$MODPATH"/Mods/L/ "$MODPATH"/Mods/S/ "$MODPATH"/Mods/O/ "$MODPATH"/Mods/"$VAR3"/ "$MODPATH"/Mods/"$VAR4"/ "$MODPATH"/Mods/"$VAR5"/ "$MODPATH"/system/app/
  if [ "$HKB" = true ]; then
  cp -rf "$MODPATH"/Mods/HKB/ "$MODPATH"/system/app/
  fi
@@ -299,6 +313,8 @@ rm -rf "$MODPATH"/compiled6/
 rm -rf "$MODPATH"/unsigned.apk
 rm -rf "$MODPATH"/unsigned2.apk
 rm -rf "$MODPATH"/unsigned3.apk
+rm -rf "$MODPATH"/unsigned4.apk
+rm -rf "$MODPATH"/unsigned5.apk
 rm -rf "$MODPATH"/unsigned6.apk
 
 if [ -d "/data/adb/ksud" ]; then
