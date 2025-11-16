@@ -1,0 +1,5 @@
+
+        Startbildschirm- und App-Uebersicht-Gesten deaktivieren?
+        (fuer die Nutzung von Gesten-Apps)
+
+        Vol+ = Ja , Vol- = Nein

@@ -1,0 +1,5 @@
+
+        Soll die Zurueck Geste deaktiviert werden?
+
+        Vol+ = Ja , Vol- = Nein
+

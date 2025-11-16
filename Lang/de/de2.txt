@@ -1,0 +1,4 @@
+
+		Verstecke Gestenleiste, aber behalte Platz unter der Tastatur bei?
+
+		Vol+ = Ja , Vol- = Nein (Standard)

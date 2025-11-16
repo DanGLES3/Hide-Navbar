@@ -1,0 +1,5 @@
+
+        Wie soll die Zurueck Geste deaktiviert werden?
+
+        Vol+ = Nur links, Vol- = Vollstaendig (fuer Gesten Apps)
+

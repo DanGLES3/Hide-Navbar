@@ -1,0 +1,3 @@
+
+        Wenn du die Zurueck-Geste wieder aktivieren moechtest,
+        installiere das Modul neu und deaktiviere dabei diese Option nicht

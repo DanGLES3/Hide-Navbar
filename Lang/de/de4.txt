@@ -1,0 +1,8 @@
+
+        Wie empfindlich sollen die Home- und App-Uebersicht-Gesten sein?
+
+        (Eine hohe Empfindlichkeit kann dazu fuehren,
+        dass Gesten beim Tippen versehentlich ausgeloest werden.)
+
+        Vol+ = Gering (Modul Standard) , Vol- = Hoch (Android's Standard)
+

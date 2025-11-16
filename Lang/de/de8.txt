@@ -1,0 +1,5 @@
+
+        Tasten unter der Tastatur verstecken?
+        (Zurueck-Taste / Tastaturwechsel-Taste)
+
+        Vol+ = Ja , Vol- = Nein

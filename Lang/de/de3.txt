@@ -1,0 +1,4 @@
+
+        Verringere den Platz unter der Tastatur?
+
+        Vol+ = Ja , Vol- = Nein (Standard)

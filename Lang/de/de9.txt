@@ -1,0 +1,9 @@
+
+        Problemumgehung aktivieren, wenn sich die Gestenleiste
+        nicht dem hellen oder dunklen Design anpasst?
+
+        (Diese Option muss nicht zwangslaeufig funktionieren,
+        und kann zu einer kleinen weissen Linie
+        am unteren Rand des Bildschirms fuehren)
+
+        Vol+ = Ja , Vol- = Nein
