@@ -200,22 +200,30 @@ fi
 
 #Write to overlay resources
 RES="$MODPATH"/Mods/Qtmp/res/values/dimens.xml
-LRES="$MODPATH"/Mods/HPS1/res/values/dimens.xml
-LRESS="$MODPATH"/Mods/HPS2/res/values/dimens.xml
+PIXEL="$MODPATH"/Mods/HPS1/res/values/dimens.xml
+STOCK="$MODPATH"/Mods/HPS2/res/values/dimens.xml
+SONY="$MODPATH"/Mods/HPS3/res/values/dimens.xml
+OP="$MODPATH"/Mods/HPS2/res/values/dimens.xml
 
 #Folder creation and etc
 if [ "$API" -ge 29 ]; then
 sed -i s/0.3/"$BH"/g "$RES"
-sed -i s/0.2/"$BH"/g "$LRES"
-sed -i s/0.2/"$BH"/g "$LRESS"
-sed -i s/0.1/"$FH"/g "$LRES"
-sed -i s/0.1/"$FH"/g "$LRESS"
+sed -i s/0.2/"$BH"/g "$PIXEL"
+sed -i s/0.2/"$BH"/g "$STOCK"
+sed -i s/0.1/"$FH"/g "$PIXEL"
+sed -i s/0.1/"$FH"/g "$STOCK"
+sed -i s/0.2/"$BH"/g "$OP"
+sed -i s/0.2/"$BH"/g "$SONY"
+sed -i s/0.1/"$FH"/g "$OP"
+sed -i s/0.1/"$FH"/g "$SONY"
 sed -i s/0.1/"$FH"/g "$RES"
 sed -i s/0.2/"$GS"/g "$RES"
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-sw900dp/
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-sw600dp/
 mkdir -p "$MODPATH"/Mods/HPS1/res/values-sw600dp-land/
 mkdir -p "$MODPATH"/Mods/HPS2/res/values-sw600dp-land/
+mkdir -p "$MODPATH"/Mods/HPS3/res/values-sw600dp-land/
+mkdir -p "$MODPATH"/Mods/HPS4/res/values-sw600dp-land/
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-440dpi/
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xhdpi/
 mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xxhdpi/
@@ -230,6 +238,8 @@ mkdir "$MODPATH"/compiled6
 cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-sw900dp/
 cp -rf "$MODPATH"/Mods/HPS1/res/values/dimens.xml "$MODPATH"/Mods/HPS1/res/values-sw600dp-land/
 cp -rf "$MODPATH"/Mods/HPS2/res/values/dimens.xml "$MODPATH"/Mods/HPS2/res/values-sw600dp-land/
+cp -rf "$MODPATH"/Mods/HPS3/res/values/dimens.xml "$MODPATH"/Mods/HPS3/res/values-sw600dp-land/
+cp -rf "$MODPATH"/Mods/HPS4/res/values/dimens.xml "$MODPATH"/Mods/HPS4/res/values-sw600dp-land/
 cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-sw600dp/
 cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-440dpi/
 cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-xhdpi/

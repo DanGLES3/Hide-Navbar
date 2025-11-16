@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="23" android:compileSdkVersionCodename="6.0-2438415" android:versionCode="1" android:versionName="1.0" package="dan.overlaye" platformBuildVersionCode="29" platformBuildVersionName="10">
+	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="29" />
+	<overlay android:priority="1" android:targetPackage="com.sonymobile.launcher" />
+	<application android:extractNativeLibs="false" android:hasCode="false"/>
+</manifest>
