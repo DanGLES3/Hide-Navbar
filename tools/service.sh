@@ -22,4 +22,8 @@ fi
  sleep 1
  cmd overlay enable dan.overlayg
  sleep 1
+ cmd overlay enable dan.sonymobile
+ sleep 1
+ cmd overlay enable dan.oneplus
+ sleep 1
  cmd overlay enable com.dan.overlayi
