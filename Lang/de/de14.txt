@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Metamodul ist installiert, aber deaktiviert!
+ Bitte aktiviere dein Metamodul und versuche es erneut.
+
+ Öffne die meta-magic_mount-rs-Release-Seite in 10 Sekunden...
+***************************************************************

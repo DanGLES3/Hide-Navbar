@@ -1,4 +1,4 @@
 
-		Reduzir o tamanho da barra do teclado?
+        Reduzir o tamanho da barra do teclado?
 
-		Vol + = Sim, Vol- = Nao (padrao)
+        Vol + = Sim, Vol- = Nao (padrao)

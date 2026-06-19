@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Metamodule is installed but disabled!
+ Please enable your metamodule and try again.
+
+ Opening the meta-magic_mount-rs release page in 10 seconds...
+***************************************************************

@@ -1,45 +1,16 @@
-   ##########################################################################################
-# Custom Logic
-#########################################################   ##########################################################################################
-# Custom Logic
+##########################################################################################
+#
+# NavTweaks / HideNavBar - Custom Installation Logic
+#
 ##########################################################################################
 
-#Detect and use compatible AAPT
-chmod +x "$MODPATH"/tools/*
-if $($MODPATH/tools/aapt2 version >/dev/null 2>&1); then
-    AAPT=aapt2
-elif $($MODPATH/tools/aapt264 version >/dev/null 2>&1); then
-    AAPT=aapt264
-fi
-cp -af "$MODPATH"/tools/$AAPT "$MODPATH"/aapt2
-mkdir -p "$MODPATH"/Mods/Q/NavigationBarModeGestura/
-mkdir -p "$MODPATH"/Mods/Qtmp/
-mkdir -p "$MODPATH"/system/app/
-cp -rf "$MODPATH"/Mods/QS/* "$MODPATH"/Mods/Qtmp/
-cp -rf "$MODPATH"/tools/service.sh "$MODPATH"
-
-#if [ -d /system/xbin/ ] && [ ! -f /system/xbin/empty ] ; then
-#    mkdir -p "$MODPATH"/system/xbin/
-#    cp -rf "$MODPATH"/tools/hn "$MODPATH"/system/xbin/
-#    cp -rf "$MODPATH"/tools/hnr "$MODPATH"/system/xbin/
-#else
-#    mkdir -p "$MODPATH"/system/bin/
-#    cp -rf "$MODPATH"/tools/hn "$MODPATH"/system/bin/
-#    cp -rf "$MODPATH"/tools/hnr "$MODPATH"/system/bin/
-#fi
-
-#Find and delete conflicting overlays/package-cache/resource-cache
-find /data/adb/modules -type d -not -path "*HideNavBar/system*" -iname "*navigationbarmodegestural*" -exec rm -rf {} \; 2>/dev/null
-find /data/system/package_cache -type f -iname "*NavigationBarMode*" -exec rm -rf {} \; 2>/dev/null
-find /data/resource-cache -type f -iname "*NavigationBarMode*" -exec rm -rf {} \; 2>/dev/null
-find /data/resource-cache -type f -iname "*P" -exec rm -rf {} \; 2>/dev/null
-find /data/resource-cache -type f -iname "*HL" -exec rm -rf {} \; 2>/dev/null
-find /data/resource-cache -type f -iname "*L" -exec rm -rf {} \; 2>/dev/null
-find /data/resource-cache -type f -iname "*PH" -exec rm -rf {} \; 2>/dev/null
-
-#Detect system language for translation
+# ----------------------------------------------------------------------------------------
+# 0. INITIALIZE LANGUAGE & CHECK FOR METAMODULES
+# ----------------------------------------------------------------------------------------
 LANG=$(settings get system system_locales)
-LANGS=$(echo "${LANG:0:2}" )
+LANGS=$(echo "${LANG:0:2}")
+
+# Verify locale files exist, otherwise default to English
 if [ -f "$MODPATH"/Lang/"$LANGS"/"$LANGS"10.txt ]; then
     :
 else
@@ -48,281 +19,211 @@ fi
 
 LNG="$MODPATH"/Lang/"$LANGS"/"$LANGS"
 
-#Standard volume selector stuff but with translations
-#Hiding navbar or not
-cat "$LNG"10.txt
-if $VKSEL; then
-     BH=0.0
-     SS=true
-     HIDE=true
-     VAR3=a
+if [ -d "/data/adb/ksu" ] || [ -d "/data/adb/ap" ]; then
+    METAMODULE_FOUND=false
+    METAMODULE_DISABLED=false
+    for PROP in /data/adb/modules/*/module.prop; do
+        [ -f "$PROP" ] || continue
+        if grep -qE "^metamodule=(1|true)" "$PROP"; then
+            MODDIR=$(dirname "$PROP")
+            if [ -f "$MODDIR/disable" ]; then
+                METAMODULE_DISABLED=true
+            else
+                METAMODULE_FOUND=true
+                break
+            fi
+        fi
+    done
+    if ! $METAMODULE_FOUND; then
+        if $METAMODULE_DISABLED; then
+            cat "$LNG"14.txt
+        else
+            cat "$LNG"13.txt
+        fi
+        sleep 10
+        am start -a android.intent.action.VIEW -d "https://github.com/Hybrid-Mount/meta-hybrid_mount/releases" >/dev/null 2>&1
+        abort "! No active metamodule found. Aborting!"
+    fi
+fi
+
+# ----------------------------------------------------------------------------------------
+# 1. LOAD CONFIGURATION OR COMMENCE INTERACTIVE VOLUME KEY SETUP
+# ----------------------------------------------------------------------------------------
+if [ -f /data/adb/HideNavBar_config.sh ] && $KSU; then
+    ui_print "     Loading saved configuration..."
+    . /data/adb/HideNavBar_config.sh
 else
-     FH=48.0
-     BH=18.0
-     SS=true
-fi
+    # First time installation: fall back to volume key prompts
 
-#Hiding keyboard bar
-if [ "$HIDE" = true ] ; then
-     cat "$LNG"11.txt
-     if $VKSEL; then
-          FH=0.0
-          SS=true
-          HKB=true
-          VAR5=HL
-          VAR4=PH
-          VAR3=a
-     else
-          FH=48.0
-          SS=true
-     fi
-fi
+    # Step A: Hide navigation bar
+    cat "$LNG"10.txt
+    if $VKSEL; then
+         BH=0.0
+         SS=true
+         HIDE=true
+         VAR3=a
+    else
+         FH=48.0
+         BH=18.0
+         SS=true
+    fi
 
-#Hide pill
-if [ "$HIDE" = true ] ; then
+    # Step B: Hide keyboard space
+    if [ "$HIDE" = true ] ; then
+         cat "$LNG"11.txt
+         if $VKSEL; then
+              FH=0.0
+              SS=true
+              HKB=true
+              VAR5=HL
+              VAR4=PH
+              VAR3=a
+         else
+              FH=48.0
+              SS=true
+         fi
+    fi
+
+    # Step C: Hide gesture pill
+    if [ "$HIDE" = true ] ; then
+         if [ "$FH" = 48.0 ] ; then
+              cat "$LNG"2.txt
+              if $VKSEL; then
+              VAR3=HP
+              VAR4=PH
+              VAR5=HL
+              HD=true
+              else
+              VAR3=a
+              VAR4=a
+              VAR5=a
+              fi
+         fi
+    fi
+
+    # Step D: Hide keyboard buttons
+    if [ "$API" -ge 29 ]; then
      if [ "$FH" = 48.0 ] ; then
-          cat "$LNG"2.txt
-          if $VKSEL; then
-          VAR3=HP
-          VAR4=PH
-          VAR5=HL
-          HD=true
-          else
-          VAR3=a
-          VAR4=a
-          VAR5=a
-          fi
-     fi
-fi
-
-#Hide Keyboard buttons
-if [ "$API" -ge 29 ]; then
- if [ "$FH" = 48.0 ] ; then
-  cat "$LNG"8.txt
-  if $VKSEL; then
-  HKB=true
-  else
-  HKB=false
-  fi
- fi
-else
- :
-fi
-
-#Small keyboard bar
-if [ "$FH" = 48.0 ] ; then
-     cat "$LNG"3.txt
-     if $VKSEL; then
-     FH=16.0
-     else
-     :
-     fi
-fi
-
-#Disabling bottom gestures
-if [ "$HIDE" = true ] ; then
-     cat "$LNG"12.txt
-     if $VKSEL; then
-     GS=0.0
-     SS=false
-     else
-     GS=32.0
-     fi
-fi
-
-#Gesture sensitivity
-if [ "$SS" = true ] ; then
-     cat "$LNG"4.txt
-     if $VKSEL; then
-     GS=18.0
-     else
-     GS=32.0
-     fi
-fi
-
-#Gcam fix
-if [ "$SS" = true ] ; then
-     cat "$LNG"9.txt
-     if $VKSEL; then
-      if [ "$FH" = 0 ] ; then
-      BH=1.0
-      FH=1.0
+      cat "$LNG"8.txt
+      if $VKSEL; then
+      HKB=true
       else
-      BH=1.0
+      HKB=false
       fi
-     else
-      :
      fi
+    fi
+
+    # Step E: Reduce space under keyboard
+    if [ "$FH" = 48.0 ] ; then
+         cat "$LNG"3.txt
+         if $VKSEL; then
+         FH=16.0
+         fi
+    fi
+
+    # Step F: Disable bottom gestures
+    if [ "$HIDE" = true ] ; then
+         cat "$LNG"12.txt
+         if $VKSEL; then
+         GS=0.0
+         SS=false
+         else
+         GS=32.0
+         fi
+    fi
+
+    # Step G: Gesture sensitivity
+    if [ "$SS" = true ] ; then
+         cat "$LNG"4.txt
+         if $VKSEL; then
+         GS=18.0
+         else
+         GS=32.0
+         fi
+    fi
+
+    # Step H: Workaround theme pill (GCam Fix)
+    if [ "$SS" = true ] ; then
+         cat "$LNG"9.txt
+         if $VKSEL; then
+          if [ "$FH" = 0 ] ; then
+          BH=1.0
+          FH=1.0
+          else
+          BH=1.0
+          fi
+          GCAM=true
+         else
+          GCAM=false
+         fi
+    fi
+
+    # Step I: Disable back gesture (Android 10 Q)
+    if [ "$API" -eq 29 ] && [ "$FH" = 0.0 ] ; then
+         cat "$LNG"5.txt
+         if $VKSEL; then
+         cp -rf "$MODPATH"/Mods/DBGQ/* "$MODPATH"
+         fi
+    fi
+
+    # Step J: Disable back gesture (Android 11+ R+)
+    if [ "$API" -ge 30 ] ; then
+         cat "$LNG"5.txt
+         if $VKSEL; then
+         DBG=true
+         else
+         DBG=false
+         settings delete secure back_gesture_inset_scale_left &>/dev/null
+         settings delete secure back_gesture_inset_scale_right &>/dev/null
+         fi
+    fi
+
+    # Step K: Disable back side selector
+    if [ "$DBG" = true ] ; then
+         cat "$LNG"6.txt
+         if $VKSEL; then
+         SD=l
+         settings put secure back_gesture_inset_scale_left -1 &>/dev/null
+         else
+         SD=b
+         settings put secure back_gesture_inset_scale_left -1 &>/dev/null
+         settings put secure back_gesture_inset_scale_right -1 &>/dev/null
+         fi
+    fi
+
+    if [ "$DBG" = true ] ; then
+        cat "$LNG"7.txt
+    fi
+    
+    # Save parameters
+    echo "GS=$GS" > /data/adb/HideNavBar_config.sh
+    echo "BH=$BH" >> /data/adb/HideNavBar_config.sh
+    echo "FH=$FH" >> /data/adb/HideNavBar_config.sh
+    echo "HKB=$HKB" >> /data/adb/HideNavBar_config.sh
+    echo "DBG=$DBG" >> /data/adb/HideNavBar_config.sh
+    echo "SD=$SD" >> /data/adb/HideNavBar_config.sh
+    echo "HD=$HD" >> /data/adb/HideNavBar_config.sh
+    echo "VAR3=$VAR3" >> /data/adb/HideNavBar_config.sh
+    echo "VAR4=$VAR4" >> /data/adb/HideNavBar_config.sh
+    echo "VAR5=$VAR5" >> /data/adb/HideNavBar_config.sh
+    echo "GCAM=$GCAM" >> /data/adb/HideNavBar_config.sh
 fi
 
-#Disable back gesture on Q
-if [ "$API" -eq 29 ] && [ "$FH" = 0.0 ] ; then
-     cat "$LNG"5.txt
-     if $VKSEL; then
-     cp -rf "$MODPATH"/Mods/DBGQ/* "$MODPATH"
-     else
-     :
-     fi
-fi
+# ----------------------------------------------------------------------------------------
+# 2. COMPILE OVERLAYS AND RUN DEPLOYMENT
+# ----------------------------------------------------------------------------------------
+ui_print "     Compiling overlays..."
+sh "$MODPATH"/compile_overlays.sh
 
-#Disable back gesture on R+
-#Reenable back gesture if no is selected
-if [ "$API" -ge 30 ] ; then
-     cat "$LNG"5.txt
-     if $VKSEL; then
-     DBG=true
-     else
-     DBG=false
-     settings delete secure back_gesture_inset_scale_left &>/dev/null
-     settings delete secure back_gesture_inset_scale_right &>/dev/null
-     fi
-fi
+# Deploy boot-service runner script to module root
+cp -rf "$MODPATH"/tools/service.sh "$MODPATH"
 
-#Left or both sides
-if [ "$DBG" = true ] ; then
-     cat "$LNG"6.txt
-     if $VKSEL; then
-     settings put secure back_gesture_inset_scale_left -1 &>/dev/null
-     else
-     settings put secure back_gesture_inset_scale_left -1 &>/dev/null
-     settings put secure back_gesture_inset_scale_right -1 &>/dev/null
-     fi
-fi
-
-#Back gesture warning
-if [ "$DBG" = true ] ; then
-    cat "$LNG"7.txt
-fi
-
-#Write to overlay resources
-RES="$MODPATH"/Mods/Qtmp/res/values/dimens.xml
-PIXEL="$MODPATH"/Mods/HPS1/res/values/dimens.xml
-STOCK="$MODPATH"/Mods/HPS2/res/values/dimens.xml
-SONY="$MODPATH"/Mods/HPS3/res/values/dimens.xml
-OP="$MODPATH"/Mods/HPS2/res/values/dimens.xml
-
-#Folder creation and etc (IMPROVE LATER TO USE LESS CODE)
-if [ "$API" -ge 29 ]; then
-sed -i s/0.3/"$BH"/g "$RES"
-sed -i s/0.2/"$BH"/g "$PIXEL"
-sed -i s/0.2/"$BH"/g "$STOCK"
-sed -i s/0.1/"$FH"/g "$PIXEL"
-sed -i s/0.1/"$FH"/g "$STOCK"
-sed -i s/0.2/"$BH"/g "$OP"
-sed -i s/0.2/"$BH"/g "$SONY"
-sed -i s/0.1/"$FH"/g "$OP"
-sed -i s/0.1/"$FH"/g "$SONY"
-sed -i s/0.1/"$FH"/g "$RES"
-sed -i s/0.2/"$GS"/g "$RES"
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-sw900dp/
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-sw600dp/
-mkdir -p "$MODPATH"/Mods/HPS1/res/values-sw600dp-land/
-mkdir -p "$MODPATH"/Mods/HPS2/res/values-sw600dp-land/
-mkdir -p "$MODPATH"/Mods/HPS3/res/values-sw600dp-land/
-mkdir -p "$MODPATH"/Mods/HPS4/res/values-sw600dp-land/
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-440dpi/
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xhdpi/
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xxhdpi/
-mkdir -p "$MODPATH"/Mods/Qtmp/res/values-xxxhdpi/
-mkdir -p "$MODPATH"/Mods/P/
-mkdir -p "$MODPATH"/Mods/L/
-mkdir -p "$MODPATH"/Mods/O/
-mkdir -p "$MODPATH"/Mods/S/
-mkdir -p "$MODPATH"/Mods/HTK/
-mkdir "$MODPATH"/compiled
-mkdir "$MODPATH"/compiled2
-mkdir "$MODPATH"/compiled3
-mkdir "$MODPATH"/compiled4
-mkdir "$MODPATH"/compiled5
-mkdir "$MODPATH"/compiled6
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-sw900dp/
-cp -rf "$MODPATH"/Mods/HPS1/res/values/dimens.xml "$MODPATH"/Mods/HPS1/res/values-sw600dp-land/
-cp -rf "$MODPATH"/Mods/HPS2/res/values/dimens.xml "$MODPATH"/Mods/HPS2/res/values-sw600dp-land/
-cp -rf "$MODPATH"/Mods/HPS3/res/values/dimens.xml "$MODPATH"/Mods/HPS3/res/values-sw600dp-land/
-cp -rf "$MODPATH"/Mods/HPS4/res/values/dimens.xml "$MODPATH"/Mods/HPS4/res/values-sw600dp-land/
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-sw600dp/
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-440dpi/
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-xhdpi/
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-xxhdpi/
-cp -rf "$MODPATH"/Mods/Qtmp/res/values/dimens.xml "$MODPATH"/Mods/Qtmp/res/values-xxxhdpi/
-fi
-
-#Detect original overlay location
-#OP=$(find /system/overlay /product/overlay /vendor/overlay /system_ext/overlay -type d -iname "navigationbarmodegestural" | cut -d 'N' -f1)
-
-#Building overlays
-if [ "$API" -ge 29 ]; then
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/Qtmp/res -o "$MODPATH"/compiled && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/Qtmp/AndroidManifest.xml "$MODPATH"/compiled/*
-
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS1/res -o "$MODPATH"/compiled2 && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned2.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/HPS1/AndroidManifest.xml "$MODPATH"/compiled2/*
-
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS2/res -o "$MODPATH"/compiled3 && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned3.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/HPS2/AndroidManifest.xml "$MODPATH"/compiled3/*
-
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS3/res -o "$MODPATH"/compiled4 && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned4.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/HPS3/AndroidManifest.xml "$MODPATH"/compiled4/*
-
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HPS4/res -o "$MODPATH"/compiled5 && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned5.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/HPS4/AndroidManifest.xml "$MODPATH"/compiled5/*
-fi
-
-if [ "$HKB" = true ]; then
-    "$MODPATH"/aapt2 compile -v --dir "$MODPATH"/Mods/HKBT/res -o "$MODPATH"/compiled6 && \
-    "$MODPATH"/aapt2 link -v --no-resource-deduping -o "$MODPATH"/unsigned6.apk -I /system/framework/framework-res.apk \
-    --manifest "$MODPATH"/Mods/HKBT/AndroidManifest.xml "$MODPATH"/compiled6/*
-
-    "$MODPATH"/tools/zipsigner "$MODPATH"/unsigned6.apk "$MODPATH"/Mods/HTK/HTK.apk
-
-     cp -rf "$MODPATH"/Mods/HTK/ "$MODPATH"/system/app/
-fi
-
-#Signing
-if [ "$API" -ge 30 ]; then
-"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned.apk "$MODPATH"/Mods/Q/NavigationBarModeGestura/NavigationBarModeGesturalOverlay.apk
-"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned2.apk "$MODPATH"/Mods/P/Pixel.apk
-"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned3.apk "$MODPATH"/Mods/L/L3.apk
-"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned4.apk "$MODPATH"/Mods/S/Sony.apk
-"$MODPATH"/tools/zipsigner "$MODPATH"/unsigned5.apk "$MODPATH"/Mods/O/O.apk
-elif [ "$API" -eq 29 ] ; then
-"$MODPATH"/tools/zipsignero "$MODPATH"/unsigned.apk "$MODPATH"/Mods/Q/NavigationBarModeGestura/NavigationBarModeGesturalOverlay.apk
-fi
-
-#Install overlays
-if [ "$API" -ge 29 ]; then
-mkdir -p "$MODPATH"/system"$OP"
-cp -rf "$MODPATH"/Mods/Q/* "$MODPATH"/Mods/P/ "$MODPATH"/Mods/L/ "$MODPATH"/Mods/S/ "$MODPATH"/Mods/O/ "$MODPATH"/Mods/"$VAR3"/ "$MODPATH"/Mods/"$VAR4"/ "$MODPATH"/Mods/"$VAR5"/ "$MODPATH"/system/app/
- if [ "$HKB" = true ]; then
- cp -rf "$MODPATH"/Mods/HKB/ "$MODPATH"/system/app/
- fi
-fi
-
-#Cleanup
-rm -rf "$MODPATH"/system/app/Mods/
-rm -rf "$MODPATH"/system/app/dummy
-rm -rf "$MODPATH"/compiled/
-rm -rf "$MODPATH"/compiled2/
-rm -rf "$MODPATH"/compiled3/
-rm -rf "$MODPATH"/compiled6/
-rm -rf "$MODPATH"/unsigned.apk
-rm -rf "$MODPATH"/unsigned2.apk
-rm -rf "$MODPATH"/unsigned3.apk
-rm -rf "$MODPATH"/unsigned4.apk
-rm -rf "$MODPATH"/unsigned5.apk
-rm -rf "$MODPATH"/unsigned6.apk
-
+# ----------------------------------------------------------------------------------------
+# 3. KERNELSU SYSTEMUI PERMISSIONS WARNING
+# ----------------------------------------------------------------------------------------
 if [ -d "/data/adb/ksud" ]; then
     ui_print ""
     ui_print "     For KernelSU make sure to give disable unmount for SystemUI and the system launcher"
 fi
 
-
 ui_print "     Complete"
-
-

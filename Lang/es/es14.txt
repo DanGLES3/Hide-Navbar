@@ -1,0 +1,7 @@
+
+***************************************************************
+ ¡El metamódulo está instalado pero desactivado!
+ Por favor, activa tu metamódulo e inténtalo de nuevo.
+
+ Abriendo la página de lanzamientos de meta-magic_mount-rs en 10 segundos...
+***************************************************************

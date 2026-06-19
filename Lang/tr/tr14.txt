@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Metamodül yüklü ancak devre dışı!
+ Lütfen metamodülünüzü etkinleştirip tekrar deneyin.
+
+ meta-magic_mount-rs yayın sayfası 10 saniye içinde açılıyor...
+***************************************************************

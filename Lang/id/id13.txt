@@ -1,0 +1,8 @@
+
+***************************************************************
+ ! Tidak ada metamodul yang terpasang!
+ Metamodul dengan metamodule=1 di module.prop-nya diperlukan
+ agar modul ini dapat berfungsi.
+
+ Membuka halaman rilis meta-magic_mount-rs dalam 10 detik...
+***************************************************************

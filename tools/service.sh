@@ -1,29 +1,54 @@
 #!/system/bin/sh
-APIE=$(cat /system/build.prop | grep ro.build.version.sdk | cut -d '='-f2)
-if [ -f /data/adb/modules/rboard-themes_addon/system.prop ] || [ -f /data/adb/modules/gboardnavbar/system.prop ] || [ -f /data/adb/modules/rboard-themes/system.prop ]; then
-printf 'do nothing'
-else
-resetprop ro.com.google.ime.kb_pad_port_b 1.0
+
+# ---------------------------------------------------------
+# 1. KEYBOARD PROPERTY CHECK
+# If none of the specific Rboard/Gboard modules are installed,
+# adjust the Google Keyboard padding property.
+# ---------------------------------------------------------
+MOD_DIR="/data/adb/modules"
+
+if [ ! -f "$MOD_DIR/rboard-themes_addon/system.prop" ] && \
+   [ ! -f "$MOD_DIR/gboardnavbar/system.prop" ] && \
+   [ ! -f "$MOD_DIR/rboard-themes/system.prop" ]; then
+
+    # Apply the property only when the above files do NOT exist
+    resetprop ro.com.google.ime.kb_pad_port_b 1.0
+
 fi
 
- while [ "$(getprop sys.boot_completed | tr -d '\r')" != "1" ]; do sleep 1; done
- sleep 4
- cmd overlay enable com.android.internal.systemui.navobar.gestural
- sleep 1
- cmd overlay enable dan.overlaya
- sleep 1
- cmd overlay enable dan.overlayb
- sleep 1
- cmd overlay enable dan.overlayd
- sleep 1
- cmd overlay enable dan.overlaye
- sleep 1
- cmd overlay enable dan.overlayf
- sleep 1
- cmd overlay enable dan.overlayg
- sleep 1
- cmd overlay enable dan.sonymobile
- sleep 1
- cmd overlay enable dan.oneplus
- sleep 1
- cmd overlay enable com.dan.overlayi
+# ---------------------------------------------------------
+# 2. BOOT COMPLETION CHECK
+# Wait in a loop until Android signals that booting is 100% finished.
+# ---------------------------------------------------------
+while [ "$(getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+    sleep 1
+done
+
+# Give the system an extra 4 seconds to stabilize before applying overlays
+sleep 4
+
+# ---------------------------------------------------------
+# 3. ENABLE OVERLAYS
+# Loop through a predefined list of overlays to enable them
+# one by one, pausing for 1 second between each.
+# ---------------------------------------------------------
+OVERLAYS="
+com.android.internal.systemui.navobar.gestural
+dan.overlaya
+dan.overlayb
+dan.overlayd
+dan.overlaye
+dan.aosp
+dan.overlayf
+dan.overlayg
+dan.sonymobile
+dan.oneplus
+dan.nothing
+com.dan.overlayi
+dan.transsion
+"
+
+for overlay in $OVERLAYS; do
+    cmd overlay enable "$overlay"
+    sleep 1
+done

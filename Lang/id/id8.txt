@@ -1,5 +1,5 @@
 
-       Mau Sembunyikan Tombol Di Bawah Keyboard?
+        Mau Sembunyikan Tombol Di Bawah Keyboard?
         (Ini Akan Menyembunyikan Tombol Panah Di Bawah Kiri Dan Tombol Ganti Keyboard)
         
         Vol+ = Iya , Vol- = Tidak

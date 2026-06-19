@@ -1,4 +1,4 @@
 
-       Klavyenin altındaki fazladan boşluk gizlensin mi?
+        Klavyenin altındaki fazladan boşluk gizlensin mi?
 
         Vol+ = Evet , Vol- = Hayır

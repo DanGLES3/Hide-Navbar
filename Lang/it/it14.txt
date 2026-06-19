@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Il metamodulo è installato ma disabilitato!
+ Per favore abilita il tuo metamodulo e riprova.
+
+ Apertura della pagina dei rilasci di meta-magic_mount-rs in 10 secondi...
+***************************************************************

@@ -4,4 +4,7 @@
     <dimen name="taskbar_from_nav_threshold">10dp</dimen>
     <dimen name="taskbar_stashed_size">0.2dp</dimen>
     <dimen name="taskbar_suw_insets">0.1dp</dimen>
+    <dimen name="taskbar_ime_size">0.1dp</dimen>
+    <dimen name="navigation_bar_height_with_gesture">0.2dp</dimen>
+    <dimen name="taskbar_size">0.1dp</dimen>
 </resources>

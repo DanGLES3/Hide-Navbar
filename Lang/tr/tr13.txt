@@ -1,0 +1,8 @@
+
+***************************************************************
+ ! Hiçbir metamodül yüklü değil!
+ Bu modülün çalışması için module.prop dosyasında metamodule=1
+ olan bir metamodül gereklidir.
+
+ meta-magic_mount-rs yayın sayfası 10 saniye içinde açılıyor...
+***************************************************************

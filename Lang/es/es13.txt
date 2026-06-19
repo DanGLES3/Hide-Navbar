@@ -1,0 +1,8 @@
+
+***************************************************************
+ ¡No hay ningún metamódulo instalado!
+ Se requiere un metamódulo con metamodule=1 en su module.prop
+ para que este módulo funcione.
+
+ Abriendo la página de lanzamientos de meta-magic_mount-rs en 10 segundos...
+***************************************************************

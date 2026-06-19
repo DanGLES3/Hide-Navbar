@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>NavTweaks Settings</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="brand">
+          <h1 id="ui_title">NavTweaks Settings</h1>
+          <p id="ui_subtitle" class="subtitle">Customize system navigation gestures & navbar size</p>
+        </div>
+        <div class="meta">
+          <span class="badge" id="module_version">...</span>
+        </div>
+      </header>
+
+      <!-- Main Controls -->
+      <main class="settings-grid">
+        <!-- Card 1: Navbar settings -->
+        <section class="card">
+          <h2 id="section_navbar">Navigation Bar</h2>
+          
+          <div class="setting-item">
+            <div class="setting-text">
+              <label for="opt_hide_navbar" id="lbl_hide_navbar">Hide Navigation Bar</label>
+              <span class="setting-desc" id="desc_hide_navbar">Remove the navigation bar completely</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_hide_navbar" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="setting-item column" id="container_navbar_height">
+            <div class="setting-text">
+              <div class="range-labels">
+                <span class="range-title" id="lbl_navbar_height">Navbar Height</span>
+                <span class="range-value" id="val_navbar_height">0</span>
+              </div>
+              <span class="setting-desc" id="desc_navbar_height">Set custom height for the gesture area</span>
+            </div>
+            <input type="range" id="opt_navbar_height" min="0" max="4000" step="100" />
+          </div>
+
+          <div class="setting-item column">
+            <div class="setting-text">
+              <div class="range-labels">
+                <span class="range-title" id="lbl_gesture_sensitivity">Gesture Sensitivity</span>
+                <span class="range-value" id="val_gesture_sensitivity">0</span>
+              </div>
+              <span class="setting-desc" id="desc_gesture_sensitivity">Change sensitivity of the home gesture</span>
+            </div>
+            <input type="range" id="opt_gesture_sensitivity" min="3000" max="9000" step="500" />
+          </div>
+        </section>
+
+        <!-- Card 2: Keyboard settings -->
+        <section class="card">
+          <h2 id="section_keyboard">Keyboard Space</h2>
+
+          <div class="setting-item column">
+            <div class="setting-text">
+              <div class="range-labels">
+                <span class="range-title" id="lbl_keyboard_space">Space Under Keyboard</span>
+                <span class="range-value" id="val_keyboard_space">0</span>
+              </div>
+              <span class="setting-desc" id="desc_keyboard_space">Choose how much blank space remains under your keyboard</span>
+            </div>
+            <input type="range" id="opt_keyboard_space" min="0" max="15000" step="500" />
+          </div>
+
+          <div class="setting-item" id="container_keyboard_buttons">
+            <div class="setting-text">
+              <label for="opt_hide_keyboard_buttons" id="lbl_hide_keyboard_buttons">Hide Buttons Under Keyboard</label>
+              <span class="setting-desc" id="desc_hide_keyboard_buttons">Hide back and keyboard-switcher icons below the keys</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_hide_keyboard_buttons" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="setting-item" id="container_hide_pill">
+            <div class="setting-text">
+              <label for="opt_hide_pill" id="lbl_hide_pill">Hide Gesture Pill / Hint</label>
+              <span class="setting-desc" id="desc_hide_pill">Hide the horizontal navigation bar line/pill</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_hide_pill" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Card 3: Back Gestures settings -->
+        <section class="card">
+          <h2 id="section_back_gestures">Back Gestures</h2>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <label for="opt_disable_back" id="lbl_disable_back">Disable Going Back Gesture</label>
+              <span class="setting-desc" id="desc_disable_back">Turn off system edge back swipes (applied instantly!)</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_disable_back" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="setting-item" id="container_back_side">
+            <div class="setting-text">
+              <label for="opt_back_side" id="lbl_back_side">Disable Side Mode</label>
+              <span class="setting-desc" id="desc_back_side">Choose which swipe edge is disabled</span>
+            </div>
+            <select id="opt_back_side" class="select-modern">
+              <option value="l" id="opt_side_left">Left Side Only</option>
+              <option value="b" id="opt_side_both">Both Sides</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Card 4: Advanced tweaks -->
+        <section class="card">
+          <h2 id="section_advanced">Advanced Tweaks</h2>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <label for="opt_disable_home" id="lbl_disable_home">Disable Home/Recents Gestures</label>
+              <span class="setting-desc" id="desc_disable_home">Completely disables bottom gestures (ideal for custom gesture apps)</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_disable_home" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <label for="opt_gcam_fix" id="lbl_gcam_fix">Theme Matching Workaround</label>
+              <span class="setting-desc" id="desc_gcam_fix">Fixes gesture pill coloring issues (may not work on all devices)</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="opt_gcam_fix" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </section>
+      </main>
+
+      <!-- Action Banner/Footer -->
+      <footer class="action-footer" id="reboot_banner">
+        <div class="footer-text">
+          <p id="lbl_reboot_warn">Some changes require a reboot to take effect.</p>
+        </div>
+        <div class="footer-actions">
+          <button class="btn btn-primary" id="btn_apply">Apply & Reboot</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Script imports -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

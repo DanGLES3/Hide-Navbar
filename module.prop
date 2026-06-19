@@ -1,8 +1,9 @@
 id=HideNavBar
-name=NavTweaks (former Fullscren/Immersive gestures) (Q-U)
-version=v28.3
-versionCode=70
+name=NavTweaks (former Fullscren/Immersive gestures) (Q-W)
+version=v30.0
+versionCode=74
 author=DanGLES3
-description=Customize Android 10-14's navigation gestures
+description=Customize Android 10-16's navigation gestures
 support=https://t.me/dnmgsk
 donate=https://www.paypal.com/donate/?hosted_button_id=BJAJW4755BXFY
+updateJson=https://raw.githubusercontent.com/Magisk-Modules-Repo/HideNavBar/master/update.json

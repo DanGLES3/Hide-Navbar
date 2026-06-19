@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="35" android:compileSdkVersionCodename="15" android:versionCode="1" android:versionName="1.0" package="dan.transsion" platformBuildVersionCode="35" platformBuildVersionName="15">
+	<uses-sdk android:minSdkVersion="35" android:targetSdkVersion="35" />
+	<overlay android:priority="999" android:targetPackage="com.transsion.launcher3" />
+	<application android:extractNativeLibs="false" android:hasCode="false"/>
+</manifest>

@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Metamodul terpasang tapi dinonaktifkan!
+ Harap aktifkan metamodul Anda dan coba lagi.
+
+ Membuka halaman rilis meta-magic_mount-rs dalam 10 detik...
+***************************************************************

@@ -1,0 +1,400 @@
+/* Styling Design System - Modern NavTweaks Configuration */
+
+:root {
+  /* Dynamic harmonious colors (Default Light) */
+  --bg-color: #f6f8fa;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --text-primary: #1f2328;
+  --text-secondary: #57606a;
+  --accent-color: #5c6bc0;
+  --accent-hover: #3f51b5;
+  --switch-off: #cbd5e1;
+  --switch-on: #5c6bc0;
+  --btn-secondary-bg: #e2e8f0;
+  --btn-secondary-text: #334155;
+  --footer-bg: rgba(255, 255, 255, 0.9);
+  --footer-border: rgba(0, 0, 0, 0.08);
+  
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0b0f19;
+    --card-bg: rgba(17, 24, 39, 0.8);
+    --card-border: rgba(255, 255, 255, 0.05);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --accent-color: #818cf8;
+    --accent-hover: #6366f1;
+    --switch-off: #374151;
+    --switch-on: #818cf8;
+    --btn-secondary-bg: #1f2937;
+    --btn-secondary-text: #d1d5db;
+    --footer-bg: rgba(17, 24, 39, 0.95);
+    --footer-border: rgba(255, 255, 255, 0.05);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+  padding-bottom: 110px; /* Space for sticky footer */
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 0 8px;
+}
+
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.badge {
+  background-color: rgba(129, 140, 248, 0.15);
+  color: var(--accent-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(129, 140, 248, 0.2);
+}
+
+/* Settings Cards */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 8px;
+}
+
+/* Settings Items */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.setting-item:first-of-type {
+  padding-top: 0;
+}
+
+.setting-item.column {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.setting-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-right: 16px;
+}
+
+.setting-text label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.setting-desc {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+/* Custom Interactive Controls */
+
+/* 1. Select Dropdown */
+.select-modern {
+  background-color: var(--btn-secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  min-width: 160px;
+}
+
+.select-modern:focus {
+  border-color: var(--accent-color);
+}
+
+/* 2. Toggle Switches */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--switch-off);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input:checked + .slider {
+  background-color: var(--switch-on);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* 3. Range Sliders */
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.range-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.range-value {
+  font-weight: 700;
+  color: var(--accent-color);
+  background-color: rgba(129, 140, 248, 0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--switch-off);
+  border-radius: 9999px;
+  outline: none;
+  margin: 12px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: var(--accent-hover);
+}
+
+/* Action Footer Banner */
+.action-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.action-footer.hidden {
+  transform: translateY(100%);
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.footer-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 4px 6px rgba(129, 140, 248, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+}
+
+/* Animations and Responsive Styles */
+@media (max-width: 600px) {
+  .app-header {
+    margin-bottom: 24px;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .card {
+    padding: 18px;
+  }
+  
+  .action-footer {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+    padding: 16px;
+  }
+  
+  .footer-text {
+    text-align: center;
+  }
+  
+  .footer-actions {
+    justify-content: stretch;
+  }
+  
+  .footer-actions .btn {
+    flex: 1;
+    text-align: center;
+  }
+}

@@ -1,0 +1,7 @@
+
+***************************************************************
+ ! Le métamodule est installé mais désactivé !
+ Veuillez activer votre métamodule et réessayer.
+
+ Ouverture de la page des versions de meta-magic_mount-rs dans 10 secondes...
+***************************************************************
